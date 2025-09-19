@@ -1,0 +1,636 @@
+﻿@* @{
+    ViewData["Title"] = "InkFusion - Piercing Tattoo Studio";
+} *@
+
+<!-- Hero Section -->
+<section id="home" class="hero-section">
+    <div class="video-background">
+        <video autoplay muted loop playsinline id="hero-video">
+            <source src="videos/v1.MP4" type="video/mp4">
+            <!-- Farklı tarayıcılar için başka formatlar ekleyebiliriz -->
+        </video>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="hero-title" data-lang-key="hero-title">Sanatını <span class="text-accent">Vücudunda</span> Taşı</h1>
+                    <p class="hero-subtitle" data-lang-key="hero-subtitle">Profesyonel dövme sanatçıları ile hayalindeki dövmeyi gerçeğe dönüştürüyoruz.</p>
+                    <div class="hero-buttons mt-4">
+                        <a href="#contact" class="btn btn-primary me-3" data-lang-key="book-now">Randevu Al</a>
+                        <a href="#gallery" class="btn btn-outline" data-lang-key="view-work">İşlerimize Bak</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-scroll">
+        <a href="#about"><i class="fas fa-chevron-down"></i></a>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="section-padding">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="about-image">
+                    <div class="image-frame"></div>
+                    <div class="image-main"></div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="section-heading">
+                    <h2 class="section-title" data-lang-key="about-title">Hakkımızda</h2>
+                    <div class="section-divider"></div>
+                </div>
+                <p class="about-text" data-lang-key="about-text">
+                    10 yılı aşkın tecrübemizle, İstanbul'un en gözde dövme stüdyosu olarak
+                    hizmet vermekteyiz. Uzman ekibimiz ve steril çalışma ortamımızla
+                    müşterilerimize en kaliteli hizmeti sunmaktan gurur duyuyoruz.
+                </p>
+                <div class="about-features">
+                    <div class="feature-item">
+                        <i class="fas fa-star feature-icon"></i>
+                        <div>
+                            <h4 data-lang-key="feature1-title">Özel Tasarımlar</h4>
+                            <p data-lang-key="feature1-text">Tamamen size özel ve benzersiz çizimler.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-award feature-icon"></i>
+                        <div>
+                            <h4 data-lang-key="feature2-title">Kaliteli İşçilik</h4>
+                            <p data-lang-key="feature2-text">En kaliteli mürekkep ve ekipmanlarla çalışıyoruz.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-users feature-icon"></i>
+                        <div>
+                            <h4 data-lang-key="feature3-title">Uzman Ekip</h4>
+                            <p data-lang-key="feature3-text">Alanında uzman deneyimli dövme sanatçıları.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="section-padding bg-dark-custom">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="section-heading">
+                    <h2 class="section-title" data-lang-key="services-title">Hizmetlerimiz</h2>
+                    <div class="section-divider"></div>
+                    <p class="section-subtitle" data-lang-key="services-subtitle">Size özel çözümler sunuyoruz</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-drafting-compass"></i>
+                    </div>
+                    <h3 data-lang-key="service1-title">Özel Tasarım</h3>
+                    <p data-lang-key="service1-text">Hayalinizdeki dövmeyi birlikte tasarlayalım. Tamamen size özel ve özgün çizimler.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 data-lang-key="service2-title">Renkli Dövmeler</h3>
+                    <p data-lang-key="service2-text">Canlı ve kalıcı renklerle hayalinizdeki dövmeyi sanat eserine dönüştürüyoruz.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-eraser"></i>
+                    </div>
+                    <h3 data-lang-key="service3-title">Dövme Silme</h3>
+                    <p data-lang-key="service3-text">Lazer teknolojisi ile istemediğiniz dövmelerden kurtulun.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section id="gallery" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="section-heading">
+                    <h2 class="section-title" data-lang-key="gallery-title">Galeri</h2>
+                    <div class="section-divider"></div>
+                    <p class="section-subtitle" data-lang-key="gallery-subtitle">Yaptığımız bazı çalışmalar</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/1.jpg');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo1-title">Kol Dövmesi</h4>
+                            <p data-lang-key="tattoo1-style">Realistik</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/2.jpg');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo2-title">Minimal Dövme</h4>
+                            <p data-lang-key="tattoo2-style">Minimalist</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/3.jpg');">
+                        ">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo3-title">Japon Dövmesi</h4>
+                            <p data-lang-key="tattoo3-style">Geleneksel</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/4.png');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo4-title">Kara Kalem</h4>
+                            <p data-lang-key="tattoo4-style">Detaylı</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/5.jpg');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo5-title">Geometrik</h4>
+                            <p data-lang-key="tattoo5-style">Modern</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/6.jpg');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/7.jpg');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/8.JPG');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/9.JPG');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/10.PNG');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/11.JPG');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/12.jpg');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/13.PNG');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/14.JPG');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/15.jpg');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/16.JPG');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/17.jpg');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background-image: url('img/gallery/18.jpg');">
+                        <div class="gallery-overlay">
+                            <h4 data-lang-key="tattoo6-title">Sualtı Teması</h4>
+                            <p data-lang-key="tattoo6-style">Renkli</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Artists Section -->
+<section id="artists" class="section-padding bg-dark-custom">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="section-heading">
+                    <h2 class="section-title" data-lang-key="artists-title">Sanatçılarımız</h2>
+                    <div class="section-divider"></div>
+                    <p class="section-subtitle" data-lang-key="artists-subtitle">Uzman ekibimizle tanışın</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="artist-card">
+                    <div class="artist-image" style="background-image: url('https://placehold.co/400x500/1a1a1a/FFFFFF/png?text=AYŞE+YILMAZ');"></div>
+                    <div class="artist-info">
+                        <h3 data-lang-key="artist1-name">Ayşe Yılmaz</h3>
+                        <p data-lang-key="artist1-specialty">Realistik Dövmeler Uzmanı</p>
+                        <div class="artist-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="artist-card">
+                    <div class="artist-image" style="background-image: url('https://placehold.co/400x500/1a1a1a/FFFFFF/png?text=MEHMET+KAYA');"></div>
+                    <div class="artist-info">
+                        <h3 data-lang-key="artist2-name">Mehmet Kaya</h3>
+                        <p data-lang-key="artist2-specialty">Geleneksel Dövmeler Uzmanı</p>
+                        <div class="artist-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="artist-card">
+                    <div class="artist-image" style="background-image: url('https://placehold.co/400x500/1a1a1a/FFFFFF/png?text=ZEYNEP+DEMİR');"></div>
+                    <div class="artist-info">
+                        <h3 data-lang-key="artist3-name">Zeynep Demir</h3>
+                        <p data-lang-key="artist3-specialty">Minimal Dövmeler Uzmanı</p>
+                        <div class="artist-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="section-heading">
+                    <h2 class="section-title" data-lang-key="testimonials-title">Müşteri Yorumları</h2>
+                    <div class="section-divider"></div>
+                    <p class="section-subtitle" data-lang-key="testimonials-subtitle">Müşterilerimizin deneyimleri</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p data-lang-key="testimonial1-text">Harika bir deneyimdi. Temizlik ve hijyen konusunda çok titizler. Dövmem tam istediğim gibi oldu.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image" style="background-image: url('https://placehold.co/60x60/1a1a1a/FFFFFF/png?text=DK');"></div>
+                        <div class="author-info">
+                            <h5 data-lang-key="testimonial1-author">Deniz K.</h5>
+                            <p data-lang-key="testimonial1-tattoo-style">Kol Dövmesi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p data-lang-key="testimonial2-text">Sanatçılar gerçekten çok yetenekli. Özel tasarım sürecinde tüm isteklerimi dikkate aldılar.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image" style="background-image: url('https://placehold.co/60x60/1a1a1a/FFFFFF/png?text=AS');"></div>
+                        <div class="author-info">
+                            <h5 data-lang-key="testimonial2-author">Ahmet S.</h5>
+                            <p data-lang-key="testimonial2-tattoo-style">Özel Tasarım</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p data-lang-key="testimonial3-text">Dövme silme işlemi yaptırdım. Sonuç mükemmel, neredeyse hiç iz kalmadı. Teşekkürler!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image" style="background-image: url('https://placehold.co/60x60/1a1a1a/FFFFFF/png?text=EY');"></div>
+                        <div class="author-info">
+                            <h5 data-lang-key="testimonial3-author">Elif Y.</h5>
+                            <p data-lang-key="testimonial3-tattoo-style">Dövme Silme</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="section-padding bg-dark-custom">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <div class="section-heading">
+                    <h2 class="section-title" data-lang-key="contact-title">İletişim</h2>
+                    <div class="section-divider"></div>
+                    <p class="section-subtitle" data-lang-key="contact-subtitle">Randevu ve bilgi almak için bize ulaşın</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-lg-8 mx-auto">
+                <form id="contactForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <input type="text" class="form-control" placeholder="Adınız Soyadınız" required data-lang-key="contact-name-placeholder">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="email" class="form-control" placeholder="E-posta Adresiniz" required data-lang-key="contact-email-placeholder">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Konu" data-lang-key="contact-subject-placeholder">
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" rows="5" placeholder="Mesajınız" required data-lang-key="contact-message-placeholder"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary" data-lang-key="contact-submit-btn">Gönder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Dil ve Tema için metinler
+        const texts = {
+            'tr': {
+                'home': 'Ana Sayfa', 'about': 'Hakkımızda', 'services': 'Hizmetler', 'gallery': 'Galeri', 'artists': 'Sanatçılar', 'testimonials': 'Yorumlar', 'contact': 'İletişim',
+                'hero-title': 'Sanatını <span class="text-accent">Vücudunda</span> Taşı',
+                'hero-subtitle': 'Profesyonel dövme sanatçıları ile hayalindeki dövmeyi gerçeğe dönüştürüyoruz.',
+                'book-now': 'Randevu Al',
+                'view-work': 'İşlerimize Bak',
+                'about-title': 'Hakkımızda', 'about-text': '10 yılı aşkın tecrübemizle, İstanbul\'un en gözde dövme stüdyosu olarak hizmet vermekteyiz. Uzman ekibimiz ve steril çalışma ortamımızla müşterilerimize en kaliteli hizmeti sunmaktan gurur duyuyoruz.',
+                'feature1-title': 'Özel Tasarımlar', 'feature1-text': 'Tamamen size özel ve benzersiz çizimler.',
+                'feature2-title': 'Kaliteli İşçilik', 'feature2-text': 'En kaliteli mürekkep ve ekipmanlarla çalışıyoruz.',
+                'feature3-title': 'Uzman Ekip', 'feature3-text': 'Alanında uzman deneyimli dövme sanatçıları.',
+                'services-title': 'Hizmetlerimiz', 'services-subtitle': 'Size özel çözümler sunuyoruz',
+                'service1-title': 'Özel Tasarım', 'service1-text': 'Hayalinizdeki dövmeyi birlikte tasarlayalım. Tamamen size özel ve özgün çizimler.',
+                'service2-title': 'Renkli Dövmeler', 'service2-text': 'Canlı ve kalıcı renklerle hayalinizdeki dövmeyi sanat eserine dönüştürüyoruz.',
+                'service3-title': 'Dövme Silme', 'service3-text': 'Lazer teknolojisi ile istemediğiniz dövmelerden kurtulun.',
+                'gallery-title': 'Galeri', 'gallery-subtitle': 'Yaptığımız bazı çalışmalar',
+                'tattoo1-title': 'Kol Dövmesi', 'tattoo1-style': 'Realistik', 'tattoo2-title': 'Minimal Dövme', 'tattoo2-style': 'Minimalist', 'tattoo3-title': 'Japon Dövmesi', 'tattoo3-style': 'Geleneksel',
+                'tattoo4-title': 'Kara Kalem', 'tattoo4-style': 'Detaylı', 'tattoo5-title': 'Geometrik', 'tattoo5-style': 'Modern', 'tattoo6-title': 'Sualtı Teması', 'tattoo6-style': 'Renkli',
+                'artists-title': 'Sanatçılarımız', 'artists-subtitle': 'Uzman ekibimizle tanışın',
+                'artist1-name': 'Ayşe Yılmaz', 'artist1-specialty': 'Realistik Dövmeler Uzmanı',
+                'artist2-name': 'Mehmet Kaya', 'artist2-specialty': 'Geleneksel Dövmeler Uzmanı',
+                'artist3-name': 'Zeynep Demir', 'artist3-specialty': 'Minimal Dövmeler Uzmanı',
+                'testimonials-title': 'Müşteri Yorumları', 'testimonials-subtitle': 'Müşterilerimizin deneyimleri',
+                'testimonial1-text': 'Harika bir deneyimdi. Temizlik ve hijyen konusunda çok titizler. Dövmem tam istediğim gibi oldu.', 'testimonial1-author': 'Deniz K.', 'testimonial1-tattoo-style': 'Kol Dövmesi',
+                'testimonial2-text': 'Sanatçılar gerçekten çok yetenekli. Özel tasarım sürecinde tüm isteklerimi dikkate aldılar.', 'testimonial2-author': 'Ahmet S.', 'testimonial2-tattoo-style': 'Özel Tasarım',
+                'testimonial3-text': 'Dövme silme işlemi yaptırdım. Sonuç mükemmel, neredeyse hiç iz kalmadı. Teşekkürler!', 'testimonial3-author': 'Elif Y.', 'testimonial3-tattoo-style': 'Dövme Silme',
+                'contact-title': 'İletişim', 'contact-subtitle': 'Randevu ve bilgi almak için bize ulaşın',
+                'contact-name-placeholder': 'Adınız Soyadınız', 'contact-email-placeholder': 'E-posta Adresiniz', 'contact-subject-placeholder': 'Konu', 'contact-message-placeholder': 'Mesajınız', 'contact-submit-btn': 'Gönder',
+                'footer-about-text': 'Sanatını seven, kaliteyi önemseyen bir dövme stüdyosu. Sizlere en iyi hizmeti sunmak için buradayız.',
+                        'contact-info-title': 'İletişim', 'address': 'Taksim, İstanbul', 'phone': '+90 531 288 01 61', 'email': 'ciniogluserap@gmail.com',
+                'social-media-title': 'Sosyal Medya', 'privacy': 'Gizlilik'
+            },
+            'en': {
+                'home': 'Home', 'about': 'About Us', 'services': 'Services', 'gallery': 'Gallery', 'artists': 'Artists', 'testimonials': 'Testimonials', 'contact': 'Contact',
+                'hero-title': 'Carry Your <span class="text-accent">Art</span> on Your Body',
+                'hero-subtitle': 'We turn your dream tattoo into reality with professional tattoo artists.',
+                'book-now': 'Book Now',
+                'view-work': 'View Our Work',
+                'about-title': 'About Us', 'about-text': 'With over 10 years of experience, we are proud to serve as one of Istanbul\'s most popular tattoo studios. With our expert team and sterile work environment, we offer our customers the highest quality service.',
+                'feature1-title': 'Custom Designs', 'feature1-text': 'Completely unique and custom drawings for you.',
+                'feature2-title': 'Quality Craftsmanship', 'feature2-text': 'We work with the highest quality inks and equipment.',
+                'feature3-title': 'Expert Team', 'feature3-text': 'Experienced tattoo artists who are experts in their field.',
+                'services-title': 'Our Services', 'services-subtitle': 'We offer tailored solutions for you',
+                'service1-title': 'Custom Design', 'service1-text': 'Let\'s design your dream tattoo together. Fully customized and original drawings for you.',
+                'service2-title': 'Colored Tattoos', 'service2-text': 'We turn your dream tattoo into a work of art with vibrant and permanent colors.',
+                'service3-title': 'Tattoo Removal', 'service3-text': 'Get rid of unwanted tattoos with laser technology.',
+                'gallery-title': 'Gallery', 'gallery-subtitle': 'Some of our works',
+                'tattoo1-title': 'Arm Tattoo', 'tattoo1-style': 'Realistic', 'tattoo2-title': 'Small Tattoo', 'tattoo2-style': 'Minimalist', 'tattoo3-title': 'Japanese Tattoo', 'tattoo3-style': 'Traditional',
+                'tattoo4-title': 'Blackwork', 'tattoo4-style': 'Detailed', 'tattoo5-title': 'Geometric', 'tattoo5-style': 'Modern', 'tattoo6-title': 'Underwater Theme', 'tattoo6-style': 'Colorful',
+                'artists-title': 'Our Artists', 'artists-subtitle': 'Meet our expert team',
+                'artist1-name': 'Ayşe Yılmaz', 'artist1-specialty': 'Realistic Tattoo Specialist',
+                'artist2-name': 'Mehmet Kaya', 'artist2-specialty': 'Traditional Tattoo Specialist',
+                'artist3-name': 'Zeynep Demir', 'artist3-specialty': 'Minimal Tattoo Specialist',
+                'testimonials-title': 'Client Testimonials', 'testimonials-subtitle': 'Our clients\' experiences',
+                'testimonial1-text': 'It was a great experience. They are very meticulous about cleanliness and hygiene. My tattoo turned out exactly as I wanted.', 'testimonial1-author': 'Deniz K.', 'testimonial1-tattoo-style': 'Arm Tattoo',
+                'testimonial2-text': 'The artists are truly talented. They took all my requests into account during the custom design process.', 'testimonial2-author': 'Ahmet S.', 'testimonial2-tattoo-style': 'Custom Design',
+                'testimonial3-text': 'I had a tattoo removal procedure. The result is perfect, almost no trace left. Thanks!', 'testimonial3-author': 'Elif Y.', 'testimonial3-tattoo-style': 'Tattoo Removal',
+                'contact-title': 'Contact', 'contact-subtitle': 'Contact us for an appointment or information',
+                'contact-name-placeholder': 'Your Name Surname', 'contact-email-placeholder': 'Your Email Address', 'contact-subject-placeholder': 'Subject', 'contact-message-placeholder': 'Your Message', 'contact-submit-btn': 'Send',
+                'footer-about-text': 'A tattoo studio that loves art and values quality. We are here to provide you with the best service.',
+                'contact-info-title': 'Contact', 'address': 'Taksim, Istanbul', 'phone': '+90 531 288 01 61', 'email': 'info@inkfusion.com',
+                'social-media-title': 'Social Media', 'privacy': 'Privacy'
+            }
+        };
+
+        // Tema ve Dil Değiştirme Fonksiyonları
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tema
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const savedTheme = localStorage.getItem('theme');
+
+            if (savedTheme) {
+                body.setAttribute('data-theme', savedTheme);
+                updateThemeIcon(savedTheme);
+            }
+
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+
+            function updateThemeIcon(theme) {
+                const themeIcon = themeToggle.querySelector('i');
+                themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+
+            // Dil
+            const langToggle = document.getElementById('langToggle');
+            let currentLang = 'tr';
+            const savedLang = localStorage.getItem('lang');
+
+            if (savedLang) {
+                currentLang = savedLang;
+                updateLang(currentLang);
+            }
+
+            langToggle.addEventListener('click', function() {
+                currentLang = currentLang === 'tr' ? 'en' : 'tr';
+                localStorage.setItem('lang', currentLang);
+                updateLang(currentLang);
+            });
+
+            function updateLang(lang) {
+                document.querySelectorAll('[data-lang-key]').forEach(element => {
+                    const key = element.getAttribute('data-lang-key');
+                    if (key) {
+                        element.innerHTML = texts[lang][key];
+                    }
+                });
+
+                document.querySelectorAll('[placeholder]').forEach(element => {
+                    const key = element.getAttribute('data-lang-key');
+                    if (key) {
+                        element.placeholder = texts[lang][key];
+                    }
+                });
+
+                langToggle.textContent = lang.toUpperCase();
+                document.documentElement.lang = lang;
+            }
+
+            // İlk yüklemede dilin güncellenmesi
+            updateLang(currentLang);
+
+            // Navbar ve smooth scroll
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.custom-navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
