@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\gallery\dermalvepiercingler\" />
+    <Folder Include="wwwroot\img\gallery\cizgiselveyazi\" />
+  </ItemGroup>
+
 </Project>

@@ -5,20 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] INKFUSION TATTO & PIERCING STUDIO</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/inkfusion.MVC.styles.css" asp-append-version="true" />
 </head>
 <body data-theme="dark">
-    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">
@@ -32,25 +28,25 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#home" data-lang-key="home">Ana Sayfa</a>
+                        <a class="nav-link" href="/#home" data-lang-key="home">Ana Sayfa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#about" data-lang-key="about">Hakkımızda</a>
+                        <a class="nav-link" href="/#about" data-lang-key="about">Hakkımızda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#services" data-lang-key="services">Hizmetler</a>
+                        <a class="nav-link" href="/#services" data-lang-key="services">Hizmetler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#gallery" data-lang-key="gallery">Galeri</a>
+                        <a class="nav-link" href="/#gallery" data-lang-key="gallery">Galeri</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#artists" data-lang-key="artists">Sanatçılar</a>
+                        <a class="nav-link" href="/#artists" data-lang-key="artists">Sanatçılar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#testimonials" data-lang-key="testimonials">Yorumlar</a>
+                        <a class="nav-link" href="/#testimonials" data-lang-key="testimonials">Yorumlar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#contact" data-lang-key="contact">İletişim</a>
+                        <a class="nav-link" href="/#contact" data-lang-key="contact">İletişim</a>
                     </li>
                     <li class="nav-item">
                         <button class="theme-toggle" id="themeToggle">
@@ -67,24 +63,21 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="container-fluid p-0">
         <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <!-- Fixed Social Icons -->
     <div class="fixed-social-icons">
-        <a href="https://wa.me/905312880161" target="_blank" class="social-icon whatsapp" aria-label="Whatsapp">
+        <a href="https://wa.me/905312880161" target="_blank" class="social-icon whatsapp" aria-label="Whatsapp" data-hover-text-tr="Mesaj atmak için tıklayın" data-hover-text-en="Click to message">
             <i class="fab fa-whatsapp"></i>
         </a>
-        <a href="https://www.instagram.com/inkftattoopiercing" target="_blank" class="social-icon instagram" aria-label="Instagram">
+        <a href="https://www.instagram.com/inkftattoopiercing" target="_blank" class="social-icon instagram" aria-label="Instagram" data-hover-text-tr="Bizi takip edin" data-hover-text-en="Follow us">
             <i class="fab fa-instagram"></i>
         </a>
     </div>
 
-    <!-- Footer -->
     <footer class="footer-section text-center text-lg-start">
         <div class="container pt-5">
             <div class="row">
@@ -117,23 +110,20 @@
                     <h5 class="text-uppercase footer-heading" data-lang-key="social-media-title">Sosyal Medya</h5>
                     <div class="social-links">
                         <a href="https://www.instagram.com/inkftattoopiercing/" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.linkedin.com/in/cuneytkayadev" class="social-link"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="text-center p-3 copyright">
-            © 2025 - InkFusion - <a asp-area="" asp-controller="Home" asp-action="Privacy" data-lang-key="privacy">Gizlilik</a>
+            © 2025 - Bu site **Cüneyt Kaya** tarafından yapıldı. İletişim için <a href="http://www.cuneytkayadev.com" target="_blank" class="footer-link">www.cuneytkayadev.com</a> sitesini ziyaret edin. - <a asp-area="" asp-controller="Home" asp-action="Privacy" data-lang-key="privacy">Gizlilik</a>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <!-- Typed.js -->
+    <script src="~/js/global.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
     <script>

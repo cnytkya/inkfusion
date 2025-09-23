@@ -1,0 +1,687 @@
+﻿@{
+    ViewData["Title"] = "InkFusion - Galeri";
+}
+
+<link rel="stylesheet" href="~/css/gallery.css" asp-append-version="true" />
+
+<section class="gallery-hero">
+    <div class="video-background">
+        <video autoplay muted loop playsinline id="hero-video">
+            <source src="~/videos/v3.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="gallery-title" data-lang-key="gallery-page-title">Sanat Galerimiz</h1>
+                    <p class="gallery-subtitle" data-lang-key="gallery-page-subtitle">Her biri bir hikaye, her biri bir sanat eseri</p>
+                    <div class="gallery-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="totalImagesCount">0</span>
+                            <span class="stat-label">Toplam Eser</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="activeCategoryCount">0</span>
+                            <span class="stat-label">Gösterilen</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="categoryCount">5</span>
+                            <span class="stat-label">Kategori</span>
+                        </div>
+                    </div>
+                    <div class="scroll-indicator">
+                        <span>Keşfet</span>
+                        <div class="scroll-arrow"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="gallery-filters">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="filter-header">
+                    <div class="filter-heading-text">
+                        <span class="letter">S</span>
+                        <span class="letter">E</span>
+                        <span class="letter">Ç</span>
+                        <span class="letter">İ</span>
+                        <span class="letter">L</span>
+                        <span class="letter">M</span>
+                        <span class="letter">İ</span>
+                        <span class="letter">Ş</span>
+                        <span class="letter"> </span>
+                        <span class="letter">E</span>
+                        <span class="letter">S</span>
+                        <span class="letter">E</span>
+                        <span class="letter">R</span>
+                        <span class="letter">L</span>
+                        <span class="letter">E</span>
+                        <span class="letter">R</span>
+                    </div>
+                    <div class="filter-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Eser ara...">
+                    </div>
+                </div>
+                <div class="filter-buttons text-center">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-th-large"></i>
+                        <span data-lang-key="filter-all">Tümü</span>
+                        <span class="filter-count" id="count-all">92</span>
+                    </button>
+                    <button class="filter-btn" data-filter="realistic">
+                        <i class="fas fa-eye"></i>
+                        <span data-lang-key="filter-realistic">Realistik Dövmeler</span>
+                        <span class="filter-count" id="count-realistic">25</span>
+                    </button>
+                    <button class="filter-btn" data-filter="dermal">
+                        <i class="fas fa-gem"></i>
+                        <span data-lang-key="filter-dermal">Dermal & Piercingler</span>
+                        <span class="filter-count" id="count-dermal">67</span>
+                    </button>
+                    <button class="filter-btn" data-filter="cizgiselveyazi">
+                        <i class="fas fa-pen-nib"></i>
+                        <span data-lang-key="filter-cizgiselveyazi">Çizgisel ve Yazı</span>
+                        <span class="filter-count" id="count-cizgiselveyazi">0</span>
+                    </button>
+                    <button class="filter-btn" data-filter="colorful">
+                        <i class="fas fa-palette"></i>
+                        <span data-lang-key="filter-colored">Renkli</span>
+                        <span class="filter-count" id="count-colorful">0</span>
+                    </button>
+                    <button class="filter-btn" data-filter="geometric">
+                        <i class="fas fa-shapes"></i>
+                        <span data-lang-key="filter-geometric">Geometrik</span>
+                        <span class="filter-count" id="count-geometric">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="gallery-grid">
+    <div class="container-fluid">
+        <div class="row" id="galleryContainer">
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <div id="noResults" class="no-results" style="display: none;">
+                    <i class="fas fa-search fa-3x"></i>
+                    <h3>Sonuç bulunamadı</h3>
+                    <p>Arama kriterlerinize uygun eser bulunamadı.</p>
+                    <button class="btn btn-primary mt-3" onclick="resetFilters()">Tümünü Göster</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="lightbox-modal" id="lightboxModal">
+    <div class="lightbox-content">
+        <button class="lightbox-close" id="lightboxClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="lightbox-image-container">
+            <img src="" alt="" class="lightbox-image" id="lightboxImage">
+            <div class="lightbox-loader"></div>
+        </div>
+        <div class="lightbox-caption">
+            <h3 id="lightboxTitle"></h3>
+            <p id="lightboxDescription"></p>
+            <div class="lightbox-counter">
+                <span id="currentIndex">1</span> / <span id="totalImages">0</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="floating-actions">
+    <button class="floating-btn" id="filterToggle">
+        <i class="fas fa-filter"></i>
+    </button>
+    <button class="floating-btn" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+</div>
+
+<div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <p>Galeri yükleniyor...</p>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 25 Realistic Resim
+        const realisticImages = [];
+        for (let i = 1; i <= 25; i++) {
+            realisticImages.push({
+                id: i,
+                title: `Realistik Dövme ${i}`,
+                category: "realistic",
+                description: `Profesyonel realistik dövme çalışması - ${i}`,
+                image: `/img/gallery/realistic/${i}.jpg`
+            });
+        }
+
+        // 67 Dermal ve Piercing Resmi
+        const dermalImages = [];
+        for (let i = 1; i <= 67; i++) {
+            dermalImages.push({
+                id: i + 25,
+                title: i <= 35 ? `Dermal Piercing ${i}` : `Vücut Piercingi ${i - 35}`,
+                category: "dermal",
+                description: i <= 35 ?
+                    `Estetik dermal piercing tasarımı - ${i}` :
+                    `Profesyonel vücut piercingi - ${i - 35}`,
+                image: `/img/gallery/dermalvepiercingler/${i}.jpg`
+            });
+        }
+
+        // Yeni: 30 Çizgisel ve Yazı Dövmeleri
+        const cizgiselveyaziImages = [];
+        for (let i = 1; i <= 30; i++) {
+            cizgiselveyaziImages.push({
+                id: i + 92, // 25 + 67 = 92, bu yüzden 93'ten başlar
+                title: `Çizgisel veya Yazı Dövmesi ${i}`,
+                category: "cizgiselveyazi",
+                description: `Minimalist çizgisel veya anlamlı yazı dövmesi - ${i}`,
+                image: `/img/gallery/cizgiselveyazi/${i}.jpg`
+            });
+        }
+
+        // Tüm resimleri birleştir
+        const galleryImages = [...realisticImages, ...dermalImages, ...cizgiselveyaziImages];
+
+        // Yeni: Sayaç animasyon fonksiyonu
+        function animateCounter(elementId, targetValue, duration) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+
+            const startValue = 0;
+            const startTime = performance.now();
+
+            function updateCounter(currentTime) {
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / duration, 1);
+                const currentValue = Math.floor(progress * targetValue);
+                element.textContent = currentValue;
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = targetValue;
+                }
+            }
+            requestAnimationFrame(updateCounter);
+        }
+
+        // Kategori sayılarını hesapla
+        function calculateCategoryCounts() {
+            const counts = {
+                'all': galleryImages.length,
+                'realistic': realisticImages.length,
+                'dermal': dermalImages.length,
+                'cizgiselveyazi': cizgiselveyaziImages.length,
+                'traditional': 0,
+                'colorful': 0,
+                'geometric': 0
+            };
+
+            // Sayıları güncelle
+            Object.keys(counts).forEach(category => {
+                const element = document.getElementById(`count-${category}`);
+                if (element) {
+                    element.textContent = counts[category];
+
+                    // Eğer kategori boşsa butonu devre dışı bırak
+                    const button = document.querySelector(`[data-filter="${category}"]`);
+                    if (counts[category] === 0 && category !== 'all') {
+                        button.style.opacity = '0.5';
+                        button.style.pointerEvents = 'none';
+                        button.title = 'Bu kategoride henüz eser bulunmuyor';
+                    } else {
+                        button.style.opacity = '1';
+                        button.style.pointerEvents = 'auto';
+                        button.title = '';
+                    }
+                }
+            });
+
+            // Toplam istatistikleri güncelle (animasyonlu)
+            const totalImagesCount = counts.all;
+            const categoryCount = Object.keys(counts).filter(key => counts[key] > 0).length;
+            animateCounter('totalImagesCount', totalImagesCount, 1500);
+            animateCounter('categoryCount', categoryCount, 1500);
+            animateCounter('activeCategoryCount', totalImagesCount, 1500);
+        }
+
+        // Filtreleri sıfırla
+        function resetFilters() {
+            document.querySelector('#searchInput').value = '';
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('[data-filter="all"]').classList.add('active');
+            filterGallery('all');
+            updateActiveCategoryCount('all');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('hero-video');
+            const galleryContainer = document.getElementById('galleryContainer');
+            const loadingScreen = document.getElementById('loadingScreen');
+            const searchInput = document.getElementById('searchInput');
+            const noResults = document.getElementById('noResults');
+
+            // Video yükleme kontrolü
+            video.addEventListener('loadeddata', function() {
+                video.play().catch(function(error) {
+                    console.log('Video otomatik oynatma hatası:', error);
+                });
+            });
+
+            video.addEventListener('error', function() {
+                console.log('Video yükleme hatası, fallback image gösterilecek');
+                document.querySelector('.video-background').style.backgroundImage = 'url("/img/fallback-hero.jpg")';
+                document.querySelector('.video-background').innerHTML = '';
+            });
+
+            // Kategori sayılarını hesapla
+            calculateCategoryCounts();
+
+            // Galeriyi yükle
+            loadGallery();
+
+            function loadGallery() {
+                galleryImages.forEach((image, index) => {
+                    const galleryItem = createGalleryItem(image, index);
+                    galleryContainer.appendChild(galleryItem);
+                });
+
+                // Yükleme ekranını kapat
+                setTimeout(() => {
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        // Aktif kategori sayısını güncelle
+                        updateActiveCategoryCount('all');
+                    }, 500);
+                }, 1500);
+
+                // Animasyonları başlat
+                animateGalleryItems();
+            }
+
+            function createGalleryItem(image, index) {
+                const col = document.createElement('div');
+                col.className = `col-lg-3 col-md-4 col-sm-6 mb-4 gallery-item`;
+                col.setAttribute('data-category', image.category);
+                col.setAttribute('data-title', image.title.toLowerCase());
+                col.setAttribute('data-description', image.description.toLowerCase());
+
+                // Kategoriye özel ikonlar
+                const categoryIcons = {
+                    'realistic': 'fas fa-eye',
+                    'dermal': 'fas fa-gem',
+                    'cizgiselveyazi': 'fas fa-pen-nib'
+                };
+
+                col.innerHTML = `
+                    <div class="gallery-card">
+                        <div class="gallery-image-container">
+                            <img src="${image.image}" alt="${image.title}" class="gallery-image" loading="lazy"
+                                 onerror="this.src='/img/placeholder.jpg'">
+                            <div class="gallery-overlay">
+                                <div class="gallery-info">
+                                    <h4>${image.title}</h4>
+                                    <span class="gallery-category">
+                                        <i class="${categoryIcons[image.category] || 'fas fa-image'}"></i>
+                                        ${image.category === 'dermal' ? 'Dermal & Piercing' : image.category}
+                                    </span>
+                                </div>
+                                <div class="gallery-actions">
+                                    <button class="gallery-action-btn view-btn"
+                                            data-image="${image.image}"
+                                            data-title="${image.title}"
+                                            data-description="${image.description}"
+                                            data-index="${index}">
+                                        <i class="fas fa-expand"></i>
+                                    </button>
+                                    <button class="gallery-action-btn like-btn">
+                                        <i class="far fa-heart"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="gallery-badge">
+                                <i class="${categoryIcons[image.category] || 'fas fa-image'}"></i>
+                                ${image.category === 'dermal' ? 'Dermal' : image.category}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                return col;
+            }
+
+            function animateGalleryItems() {
+                const items = document.querySelectorAll('.gallery-item');
+                items.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, index * 30); // Daha hızlı animasyon (92 resim için optimize)
+                });
+            }
+
+            function updateActiveCategoryCount(filter) {
+                let count = 0;
+                if (filter === 'all') {
+                    count = galleryImages.length;
+                } else {
+                    count = galleryImages.filter(img => img.category === filter).length;
+                }
+                document.getElementById('activeCategoryCount').textContent = count;
+            }
+
+            // Filtreleme işlevselliği
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.style.pointerEvents === 'none') return;
+
+                    // Aktif butonu güncelle
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filterValue = this.getAttribute('data-filter');
+                    filterGallery(filterValue);
+                    updateActiveCategoryCount(filterValue);
+
+                    // Arama kutusunu temizle
+                    searchInput.value = '';
+                });
+            });
+
+            function filterGallery(filter) {
+                const items = document.querySelectorAll('.gallery-item');
+                let visibleCount = 0;
+
+                items.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 50);
+                        visibleCount++;
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+
+                // Sonuç yoksa mesaj göster
+                if (visibleCount === 0) {
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
+            }
+
+            // Arama işlevselliği
+            let searchTimeout;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    const searchTerm = this.value.toLowerCase().trim();
+                    const items = document.querySelectorAll('.gallery-item');
+                    let visibleCount = 0;
+
+                    items.forEach(item => {
+                        const title = item.getAttribute('data-title');
+                        const description = item.getAttribute('data-description');
+                        const category = item.getAttribute('data-category');
+
+                        if (searchTerm === '' ||
+                            title.includes(searchTerm) ||
+                            description.includes(searchTerm) ||
+                            category.includes(searchTerm)) {
+
+                            item.style.display = 'block';
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                                item.style.transform = 'scale(1)';
+                            }, 50);
+                            visibleCount++;
+                        } else {
+                            item.style.opacity = '0';
+                            item.style.transform = 'scale(0.8)';
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+
+                    // Arama aktifse filtre butonlarını güncelle
+                    if (searchTerm) {
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        document.querySelector('[data-filter="all"]').classList.add('active');
+                        updateActiveCategoryCount('all');
+                    }
+
+                    // Sonuç yoksa mesaj göster
+                    if (visibleCount === 0) {
+                        noResults.style.display = 'block';
+                    } else {
+                        noResults.style.display = 'none';
+                    }
+                }, 300); // 300ms debounce
+            });
+
+            // Lightbox işlevselliği
+            const lightboxModal = document.getElementById('lightboxModal');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxTitle = document.getElementById('lightboxTitle');
+            const lightboxDescription = document.getElementById('lightboxDescription');
+            const lightboxClose = document.getElementById('lightboxClose');
+            const lightboxPrev = document.getElementById('lightboxPrev');
+            const lightboxNext = document.getElementById('lightboxNext');
+            const currentIndex = document.getElementById('currentIndex');
+            const totalImages = document.getElementById('totalImages');
+
+            let currentImageIndex = 0;
+            let filteredImages = [];
+
+            function getFilteredImages() {
+                const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+                const searchTerm = searchInput.value.toLowerCase().trim();
+
+                if (searchTerm) {
+                    return galleryImages.filter(img =>
+                        img.title.toLowerCase().includes(searchTerm) ||
+                        img.description.toLowerCase().includes(searchTerm) ||
+                        img.category.includes(searchTerm)
+                    );
+                } else if (activeFilter === 'all') {
+                    return galleryImages;
+                } else {
+                    return galleryImages.filter(img => img.category === activeFilter);
+                }
+            }
+
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('view-btn')) {
+                    filteredImages = getFilteredImages();
+                    const clickedIndex = parseInt(e.target.getAttribute('data-index'));
+
+                    // Tıklanan resmin filteredImages'taki index'ini bul
+                    const imageUrl = e.target.getAttribute('data-image');
+                    currentImageIndex = filteredImages.findIndex(img => img.image === imageUrl);
+
+                    if (currentImageIndex !== -1) {
+                        openLightbox(currentImageIndex);
+                    }
+                }
+            });
+
+            function openLightbox(index) {
+                if (filteredImages.length === 0) return;
+
+                const image = filteredImages[index];
+                lightboxImage.src = image.image;
+                lightboxTitle.textContent = image.title;
+                lightboxDescription.textContent = image.description;
+                currentIndex.textContent = index + 1;
+                totalImages.textContent = filteredImages.length;
+                currentImageIndex = index;
+
+                lightboxModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+
+                const loader = document.querySelector('.lightbox-loader');
+                loader.style.display = 'block';
+
+                lightboxImage.onload = function() {
+                    loader.style.display = 'none';
+                };
+
+                lightboxImage.onerror = function() {
+                    loader.style.display = 'none';
+                    this.src = '/img/placeholder.jpg';
+                };
+            }
+
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxModal.addEventListener('click', function(e) {
+                if (e.target === lightboxModal) {
+                    closeLightbox();
+                }
+            });
+
+            lightboxPrev.addEventListener('click', function() {
+                if (filteredImages.length === 0) return;
+                currentImageIndex = (currentImageIndex - 1 + filteredImages.length) % filteredImages.length;
+                openLightbox(currentImageIndex);
+            });
+
+            lightboxNext.addEventListener('click', function() {
+                if (filteredImages.length === 0) return;
+                currentImageIndex = (currentImageIndex + 1) % filteredImages.length;
+                openLightbox(currentImageIndex);
+            });
+
+            function closeLightbox() {
+                lightboxModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            // Klavye navigasyonu
+            document.addEventListener('keydown', function(e) {
+                if (lightboxModal.style.display === 'flex') {
+                    if (e.key === 'Escape') closeLightbox();
+                    if (e.key === 'ArrowLeft') lightboxPrev.click();
+                    if (e.key === 'ArrowRight') lightboxNext.click();
+                }
+            });
+
+            // Floating actions
+            const backToTop = document.getElementById('backToTop');
+            const filterToggle = document.getElementById('filterToggle');
+
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            filterToggle.addEventListener('click', function() {
+                document.querySelector('.gallery-filters').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTop.style.display = 'flex';
+                } else {
+                    backToTop.style.display = 'none';
+                }
+            });
+
+            // Like butonu işlevselliği
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('like-btn') || e.target.closest('.like-btn')) {
+                    const btn = e.target.classList.contains('like-btn') ? e.target : e.target.closest('.like-btn');
+                    const icon = btn.querySelector('i');
+
+                    btn.classList.toggle('liked');
+                    if (btn.classList.contains('liked')) {
+                        icon.className = 'fas fa-heart';
+                        btn.style.animation = 'heartBeat 0.6s';
+                        const imageSrc = btn.closest('.gallery-card').querySelector('.gallery-image').src;
+                        saveLike(imageSrc);
+                    } else {
+                        icon.className = 'far fa-heart';
+                        const imageSrc = btn.closest('.gallery-card').querySelector('.gallery-image').src;
+                        removeLike(imageSrc);
+                    }
+
+                    setTimeout(() => {
+                        btn.style.animation = '';
+                    }, 600);
+                }
+            });
+
+            // Sayfa yüklendiğinde beğenileri yükle
+            loadLikes();
+        });
+
+        // Beğeni yönetimi (önceki kod aynı kalacak)
+        function saveLike(imageSrc) {
+            const likes = JSON.parse(localStorage.getItem('galleryLikes') || '[]');
+            if (!likes.includes(imageSrc)) {
+                likes.push(imageSrc);
+                localStorage.setItem('galleryLikes', JSON.stringify(likes));
+            }
+        }
+
+        function removeLike(imageSrc) {
+            const likes = JSON.parse(localStorage.getItem('galleryLikes') || '[]');
+            const index = likes.indexOf(imageSrc);
+            if (index > -1) {
+                likes.splice(index, 1);
+                localStorage.setItem('galleryLikes', JSON.stringify(likes));
+            }
+        }
+
+        function loadLikes() {
+            const likes = JSON.parse(localStorage.getItem('galleryLikes') || '[]');
+            const likeButtons = document.querySelectorAll('.like-btn');
+
+            likeButtons.forEach(btn => {
+                const imageSrc = btn.closest('.gallery-card').querySelector('.gallery-image').src;
+                if (likes.includes(imageSrc)) {
+                    btn.classList.add('liked');
+                    btn.querySelector('i').className = 'fas fa-heart';
+                }
+            });
+        }
+
+        // Global fonksiyon
+        window.resetFilters = resetFilters;
+    </script>
+}
