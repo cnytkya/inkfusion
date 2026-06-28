@@ -1,0 +1,39 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 9.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore inkfusion.MVC/inkfusion.MVC.csproj
+
+    - name: Build
+      run: dotnet build inkfusion.MVC/inkfusion.MVC.csproj -c Release --no-restore
+
+    - name: Publish
+      run: dotnet publish inkfusion.MVC/inkfusion.MVC.csproj -c Release -o ./publish
+
+    - name: Upload to FTP Server
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./publish/
+        server-dir: /httpdocs/
+        state-name: .ftp-deploy-sync-state.json
+        state-dir: ./
+        dangerous-clean-slate: false
