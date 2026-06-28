@@ -1,0 +1,283 @@
+@model SignupModel
+
+@{
+    ViewData["Title"] = "Kayıt Ol - ";
+    Layout = "_AuthLayout";
+}
+
+<style>
+    .signup-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding-top: 60px;
+        padding-bottom: 40px;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    }
+
+    .signup-box {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 40px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .signup-box h2 {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 30px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 28px;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .signup-box .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-row .form-group {
+        margin-bottom: 0;
+    }
+
+    .signup-box label {
+        display: block;
+        color: #b0b0b0;
+        font-size: 14px;
+        margin-bottom: 8px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+    }
+
+    .signup-box input[type="text"],
+    .signup-box input[type="email"],
+    .signup-box input[type="password"],
+    .signup-box input[type="tel"] {
+        width: 100%;
+        padding: 12px 15px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 6px;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .signup-box input:focus {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: #d4af37;
+        outline: none;
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .signup-box input::placeholder {
+        color: #808080;
+    }
+
+    .form-check {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 25px;
+    }
+
+    .form-check input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        margin-top: 2px;
+        cursor: pointer;
+        accent-color: #d4af37;
+    }
+
+    .form-check label {
+        margin: 0;
+        color: #b0b0b0;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    .signup-btn {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+        border: none;
+        border-radius: 6px;
+        color: #1a1a1a;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .signup-btn:hover {
+        background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+    }
+
+    .signup-btn:active {
+        transform: translateY(0);
+    }
+
+    .error-message {
+        background: rgba(220, 53, 69, 0.1);
+        border: 1px solid rgba(220, 53, 69, 0.3);
+        color: #ff6b6b;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        font-size: 13px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .field-error {
+        color: #ff6b6b;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .signup-footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 13px;
+        color: #b0b0b0;
+    }
+
+    .signup-footer a {
+        color: #d4af37;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .signup-footer a:hover {
+        color: #f4d03f;
+    }
+
+</style>
+
+<div class="signup-container">
+    <div class="signup-box">
+        <h2><i class="fas fa-user-plus me-2"></i>Kayıt Ol</h2>
+
+        <form method="post" action="@Url.Action("Index", "Signup")">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    @foreach (var modelState in ViewData.ModelState.Values)
+                    {
+                        @foreach (var error in modelState.Errors)
+                        {
+                            <div>@error.ErrorMessage</div>
+                        }
+                    }
+                </div>
+            }
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">Ad</label>
+                    <input type="text"
+                           id="firstName"
+                           name="FirstName"
+                           class="form-control"
+                           placeholder="Adınız"
+                           value="@Model?.FirstName"
+                           required>
+                    <span asp-validation-for="FirstName" class="field-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Soyadı</label>
+                    <input type="text"
+                           id="lastName"
+                           name="LastName"
+                           class="form-control"
+                           placeholder="Soyadınız"
+                           value="@Model?.LastName"
+                           required>
+                    <span asp-validation-for="LastName" class="field-error"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-posta Adresi</label>
+                <input type="email"
+                       id="email"
+                       name="Email"
+                       class="form-control"
+                       placeholder="E-posta adresiniz"
+                       value="@Model?.Email"
+                       required>
+                <span asp-validation-for="Email" class="field-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Kullanıcı Adı</label>
+                <input type="text"
+                       id="username"
+                       name="Username"
+                       class="form-control"
+                       placeholder="Kullanıcı adınız"
+                       value="@Model?.Username"
+                       required>
+                <span asp-validation-for="Username" class="field-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Şifre</label>
+                <input type="password"
+                       id="password"
+                       name="Password"
+                       class="form-control"
+                       placeholder="Şifrenizi girin"
+                       required>
+                <span asp-validation-for="Password" class="field-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Şifreyi Doğrulayın</label>
+                <input type="password"
+                       id="confirmPassword"
+                       name="ConfirmPassword"
+                       class="form-control"
+                       placeholder="Şifrenizi tekrar girin"
+                       required>
+                <span asp-validation-for="ConfirmPassword" class="field-error"></span>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" id="acceptTerms" name="AcceptTerms" value="true" required>
+                <label for="acceptTerms">
+                    Hizmet Şartlarını ve Gizlilik Politikasını Kabul Ediyorum
+                </label>
+            </div>
+            <span asp-validation-for="AcceptTerms" class="field-error"></span>
+
+            <button type="submit" class="signup-btn">
+                <i class="fas fa-check me-2"></i>Kayıt Ol
+            </button>
+        </form>
+
+        <div class="signup-footer">
+            <p>Zaten hesabınız var mı? <a asp-controller="Login" asp-action="Index">Giriş Yap</a></p>
+        </div>
+    </div>
+</div>

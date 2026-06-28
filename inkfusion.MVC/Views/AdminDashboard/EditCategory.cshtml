@@ -1,0 +1,152 @@
+@model inkfusion.MVC.Models.Category
+
+@{
+    ViewData["Title"] = "Kategori Düzenle";
+    Layout = "_AdminLayout";
+}
+
+<style>
+    .form-container {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 30px;
+        max-width: 600px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    label {
+        display: block;
+        color: #d4af37;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+        width: 100%;
+        padding: 12px 15px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 6px;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    input:focus,
+    textarea:focus {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: #d4af37;
+        outline: none;
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-submit {
+        background: #d4af37;
+        color: #1a1a1a;
+    }
+
+    .btn-submit:hover {
+        background: #f4d03f;
+    }
+
+    .btn-cancel {
+        background: rgba(255, 255, 255, 0.1);
+        color: #b0b0b0;
+    }
+
+    .btn-cancel:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .info-text {
+        color: #b0b0b0;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .icon-preview {
+        font-size: 32px;
+        color: #d4af37;
+        margin-top: 10px;
+    }
+</style>
+
+<h2><i class="fas fa-edit me-2"></i>@ViewData["Title"]</h2>
+
+<div class="form-container">
+    <form method="post" action="@Url.Action("EditCategory", "AdminDashboard", new { id = Model.Id })">
+        <div class="form-group">
+            <label for="name">Kategori Adı *</label>
+            <input type="text" id="name" name="Name" value="@Model.Name" required placeholder="Örn: Realistik Dövmeler">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Açıklama</label>
+            <textarea id="description" name="Description" placeholder="Kategori açıklaması">@Model.Description</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="icon">İkon Class *</label>
+            <input type="text" id="icon" name="Icon" value="@Model.Icon" required placeholder="Örn: fas fa-eye">
+            <div class="info-text">Font Awesome ikonu (örn: fas fa-gem, fas fa-palette)</div>
+            @if (!string.IsNullOrEmpty(Model.Icon))
+            {
+                <div class="icon-preview">
+                    <i class="@Model.Icon"></i>
+                </div>
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="displayOrder">Görüntüleme Sırası</label>
+            <input type="number" id="displayOrder" name="DisplayOrder" value="@Model.DisplayOrder" min="1" max="100">
+        </div>
+
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="IsActive" value="true" @(Model.IsActive ? "checked" : "") style="width: auto; margin-right: 8px;">
+                Aktif
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-submit">
+                <i class="fas fa-save me-2"></i>Kaydet
+            </button>
+            <a href="@Url.Action("Categories", "AdminDashboard")" class="btn btn-cancel">
+                <i class="fas fa-times me-2"></i>İptal
+            </a>
+        </div>
+    </form>
+</div>

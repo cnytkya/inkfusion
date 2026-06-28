@@ -1,0 +1,158 @@
+@{
+    ViewData["Title"] = "Kayıt Başarılı - ";
+}
+
+<style>
+    .success-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding-top: 60px;
+        padding-bottom: 40px;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    }
+
+    .success-box {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 60px 40px;
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .success-icon {
+        font-size: 80px;
+        color: #4ecdc4;
+        margin-bottom: 30px;
+    }
+
+
+    .success-box h2 {
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+
+    .success-box p {
+        color: #b0b0b0;
+        font-size: 15px;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .success-message {
+        background: rgba(78, 205, 196, 0.1);
+        border: 1px solid rgba(78, 205, 196, 0.3);
+        color: #4ecdc4;
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 30px;
+        font-size: 14px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        border-radius: 6px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+        color: #1a1a1a;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: #4ecdc4;
+        border: 2px solid #4ecdc4;
+    }
+
+    .btn-secondary:hover {
+        background: #4ecdc4;
+        color: #1a1a1a;
+        transform: translateY(-2px);
+    }
+
+    .info-list {
+        text-align: left;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        border-radius: 6px;
+        margin-bottom: 30px;
+    }
+
+    .info-list li {
+        color: #b0b0b0;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .info-list li:before {
+        content: "✓ ";
+        color: #4ecdc4;
+        font-weight: bold;
+        margin-right: 8px;
+    }
+
+</style>
+
+<div class="success-container">
+    <div class="success-box">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+
+        <h2>Kayıt Başarılı!</h2>
+        <p>Hoş geldiniz! Hesabınız başarıyla oluşturulmuştur.</p>
+
+        <div class="success-message">
+            <i class="fas fa-info-circle me-2"></i>
+            Artık InkFusion ailesinin bir üyesisiniz!
+        </div>
+
+        <ul class="info-list">
+            <li>Randevu alabilirsiniz</li>
+            <li>Özel tekliflerden yararlanabilirsiniz</li>
+            <li>Yorumlarınızı paylaşabilirsiniz</li>
+            <li>Sanatçılarımızla iletişim kurabilirsiniz</li>
+        </ul>
+
+        <div class="btn-group">
+            <a asp-controller="Login" asp-action="Index" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt"></i>Giriş Yap
+            </a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-home"></i>Ana Sayfa
+            </a>
+        </div>
+    </div>
+</div>

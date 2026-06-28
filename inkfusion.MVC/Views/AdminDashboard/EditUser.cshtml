@@ -1,0 +1,192 @@
+@model inkfusion.MVC.Models.User
+
+@{
+    ViewData["Title"] = "Kullanıcı Düzenle";
+    Layout = "_AdminLayout";
+}
+
+<style>
+    .form-container {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 30px;
+        max-width: 600px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    label {
+        display: block;
+        color: #d4af37;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select {
+        width: 100%;
+        padding: 12px 15px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 6px;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    select option {
+        background: #2d2d2d;
+        color: #fff;
+    }
+
+    input:focus {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: #d4af37;
+        outline: none;
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .form-row .form-group {
+        margin-bottom: 0;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-submit {
+        background: #d4af37;
+        color: #1a1a1a;
+    }
+
+    .btn-submit:hover {
+        background: #f4d03f;
+    }
+
+    .btn-cancel {
+        background: rgba(255, 255, 255, 0.1);
+        color: #b0b0b0;
+    }
+
+    .btn-cancel:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .read-only {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
+        color: #b0b0b0 !important;
+        cursor: not-allowed !important;
+    }
+
+    .field-error {
+        color: #ff6b6b;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .info-text {
+        color: #b0b0b0;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+</style>
+
+<h2><i class="fas fa-edit me-2"></i>@ViewData["Title"]</h2>
+
+<div class="form-container">
+    <form method="post" action="@Url.Action("EditUser", "AdminDashboard", new { id = Model.Id })">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="firstName">Ad *</label>
+                <input type="text" id="firstName" name="FirstName" value="@Model.FirstName" required>
+                <span asp-validation-for="FirstName" class="field-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Soyadı *</label>
+                <input type="text" id="lastName" name="LastName" value="@Model.LastName" required>
+                <span asp-validation-for="LastName" class="field-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">E-posta Adresi</label>
+            <input type="email" id="email" name="Email" value="@Model.Email" class="read-only" readonly>
+            <div class="info-text">E-posta değiştirilemez</div>
+        </div>
+
+        <div class="form-group">
+            <label for="username">Kullanıcı Adı</label>
+            <input type="text" id="username" name="Username" value="@Model.Username" class="read-only" readonly>
+            <div class="info-text">Kullanıcı adı değiştirilemez</div>
+        </div>
+
+        @if (Model.Id != 1)
+        {
+            <div class="form-group">
+                <label for="role">Rol *</label>
+                <select id="role" name="Role" required>
+                    @if (Model.Role.ToString() == "Customer")
+                    {
+                        <option value="Customer" selected>Müşteri</option>
+                        <option value="Admin">Admin</option>
+                    }
+                    else
+                    {
+                        <option value="Customer">Müşteri</option>
+                        <option value="Admin" selected>Admin</option>
+                    }
+                </select>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label>Rol: <strong>Super Admin</strong></label>
+                <div class="info-text">Super Admin rolü değiştirilemez</div>
+            </div>
+        }
+
+        <div class="form-group">
+            <label>Durum: <strong>@(Model.IsActive ? "✅ Aktif" : "❌ İnaktif")</strong></label>
+            <div class="info-text">Durumu Kullanıcılar sayfasından değiştirin</div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-submit">
+                <i class="fas fa-save me-2"></i>Kaydet
+            </button>
+            <a href="@Url.Action("Users", "AdminDashboard")" class="btn btn-cancel">
+                <i class="fas fa-times me-2"></i>İptal
+            </a>
+        </div>
+    </form>
+</div>

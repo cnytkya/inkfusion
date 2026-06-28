@@ -1,5 +1,31 @@
-﻿@{
+﻿@model IEnumerable<inkfusion.MVC.Models.GalleryItem>
+
+@{
     ViewData["Title"] = "InkFusion - Galeri";
+
+    // Galeri verilerini JSON'a dönüştür
+    var galleryJson = System.Text.Json.JsonSerializer.Serialize(
+        (Model ?? Enumerable.Empty<inkfusion.MVC.Models.GalleryItem>()).Select(g => new {
+            id = g.Id,
+            title = g.Title,
+            categoryId = g.CategoryId ?? 0,
+            categoryName = g.CategoryNavigation?.Name ?? "Diğer",
+            category = (g.CategoryNavigation?.Name ?? "other").ToLower().Replace(" ", ""),
+            description = g.Description,
+            image = g.ImageUrl,
+            artistName = g.Artist != null ? $"{g.Artist.FirstName} {g.Artist.LastName}" : "Bilinmiyor"
+        }).ToList()
+    );
+
+    // Kategorileri grupla
+    var categories = (Model ?? Enumerable.Empty<inkfusion.MVC.Models.GalleryItem>())
+        .Where(g => g.CategoryNavigation != null)
+        .GroupBy(g => g.CategoryId)
+        .Select(g => new {
+            id = g.Key,
+            name = g.First().CategoryNavigation.Name,
+            count = g.Count()
+        }).OrderBy(c => c.name).ToList();
 }
 
 <link rel="stylesheet" href="~/css/gallery.css" asp-append-version="true" />
@@ -74,34 +100,17 @@
                 <div class="filter-buttons text-center">
                     <button class="filter-btn active" data-filter="all">
                         <i class="fas fa-th-large"></i>
-                        <span data-lang-key="filter-all">Tümü</span>
-                        <span class="filter-count" id="count-all">92</span>
+                        <span>Tümü</span>
+                        <span class="filter-count" id="count-all">@((Model ?? Enumerable.Empty<inkfusion.MVC.Models.GalleryItem>()).Count())</span>
                     </button>
-                    <button class="filter-btn" data-filter="realistic">
-                        <i class="fas fa-eye"></i>
-                        <span data-lang-key="filter-realistic">Realistik Dövmeler</span>
-                        <span class="filter-count" id="count-realistic">25</span>
-                    </button>
-                    <button class="filter-btn" data-filter="dermal">
-                        <i class="fas fa-gem"></i>
-                        <span data-lang-key="filter-dermal">Dermal & Piercingler</span>
-                        <span class="filter-count" id="count-dermal">67</span>
-                    </button>
-                    <button class="filter-btn" data-filter="cizgiselveyazi">
-                        <i class="fas fa-pen-nib"></i>
-                        <span data-lang-key="filter-cizgiselveyazi">Çizgisel ve Yazı</span>
-                        <span class="filter-count" id="count-cizgiselveyazi">0</span>
-                    </button>
-                    <button class="filter-btn" data-filter="colorful">
-                        <i class="fas fa-palette"></i>
-                        <span data-lang-key="filter-colored">Renkli</span>
-                        <span class="filter-count" id="count-colorful">0</span>
-                    </button>
-                    <button class="filter-btn" data-filter="geometric">
-                        <i class="fas fa-shapes"></i>
-                        <span data-lang-key="filter-geometric">Geometrik</span>
-                        <span class="filter-count" id="count-geometric">0</span>
-                    </button>
+                    @foreach (var cat in categories)
+                    {
+                        <button class="filter-btn" data-filter="@cat.name.ToLower().Replace(" ", "")">
+                            <i class="fas fa-image"></i>
+                            <span>@cat.name</span>
+                            <span class="filter-count" id="count-@cat.name.ToLower().Replace(" ", "")">@cat.count</span>
+                        </button>
+                    }
                 </div>
             </div>
         </div>
@@ -168,46 +177,18 @@
 
 @section Scripts {
     <script>
-        // 25 Realistic Resim
-        const realisticImages = [];
-        for (let i = 1; i <= 25; i++) {
-            realisticImages.push({
-                id: i,
-                title: `Realistik Dövme ${i}`,
-                category: "realistic",
-                description: `Profesyonel realistik dövme çalışması - ${i}`,
-                image: `/img/gallery/realistic/${i}.jpg`
-            });
-        }
+        // Database'den gelen galeri verilerini JavaScript array'ine dönüştür
+        const galleryImages = @Html.Raw(galleryJson);
 
-        // 67 Dermal ve Piercing Resmi
-        const dermalImages = [];
-        for (let i = 1; i <= 67; i++) {
-            dermalImages.push({
-                id: i + 25,
-                title: i <= 35 ? `Dermal Piercing ${i}` : `Vücut Piercingi ${i - 35}`,
-                category: "dermal",
-                description: i <= 35 ?
-                    `Estetik dermal piercing tasarımı - ${i}` :
-                    `Profesyonel vücut piercingi - ${i - 35}`,
-                image: `/img/gallery/dermalvepiercingler/${i}.jpg`
-            });
-        }
-
-        // Yeni: 30 Çizgisel ve Yazı Dövmeleri
-        const cizgiselveyaziImages = [];
-        for (let i = 1; i <= 30; i++) {
-            cizgiselveyaziImages.push({
-                id: i + 92, // 25 + 67 = 92, bu yüzden 93'ten başlar
-                title: `Çizgisel veya Yazı Dövmesi ${i}`,
-                category: "cizgiselveyazi",
-                description: `Minimalist çizgisel veya anlamlı yazı dövmesi - ${i}`,
-                image: `/img/gallery/cizgiselveyazi/${i}.jpg`
-            });
-        }
-
-        // Tüm resimleri birleştir
-        const galleryImages = [...realisticImages, ...dermalImages, ...cizgiselveyaziImages];
+        // Kategorileri say
+        const categoryNames = {
+            'realistic': 'Realistik Dövmeler',
+            'dermal': 'Dermal & Piercingler',
+            'cizgiselveyazi': 'Çizgisel ve Yazı',
+            'colorful': 'Renkli',
+            'geometric': 'Geometrik',
+            'traditional': 'Geleneksel'
+        };
 
         // Yeni: Sayaç animasyon fonksiyonu
         function animateCounter(elementId, targetValue, duration) {
@@ -232,26 +213,34 @@
             requestAnimationFrame(updateCounter);
         }
 
-        // Kategori sayılarını hesapla
+        // Dinamik kategori sayılarını hesapla
         function calculateCategoryCounts() {
-            const counts = {
-                'all': galleryImages.length,
-                'realistic': realisticImages.length,
-                'dermal': dermalImages.length,
-                'cizgiselveyazi': cizgiselveyaziImages.length,
-                'traditional': 0,
-                'colorful': 0,
-                'geometric': 0
-            };
+            // Tüm kategorileri dinamik olarak say
+            const counts = { 'all': galleryImages.length };
+            const categoryGroups = {};
+
+            // Resimlerden kategori sayılarını hesapla
+            galleryImages.forEach(image => {
+                const cat = image.category || 'other';
+                if (!categoryGroups[cat]) {
+                    categoryGroups[cat] = 0;
+                }
+                categoryGroups[cat]++;
+            });
+
+            // Sayılarını birleştir
+            Object.assign(counts, categoryGroups);
 
             // Sayıları güncelle
             Object.keys(counts).forEach(category => {
                 const element = document.getElementById(`count-${category}`);
                 if (element) {
                     element.textContent = counts[category];
+                }
 
-                    // Eğer kategori boşsa butonu devre dışı bırak
-                    const button = document.querySelector(`[data-filter="${category}"]`);
+                // Butonu kontrol et
+                const button = document.querySelector(`[data-filter="${category}"]`);
+                if (button) {
                     if (counts[category] === 0 && category !== 'all') {
                         button.style.opacity = '0.5';
                         button.style.pointerEvents = 'none';
@@ -264,9 +253,9 @@
                 }
             });
 
-            // Toplam istatistikleri güncelle (animasyonlu)
+            // İstatistikleri güncelle
             const totalImagesCount = counts.all;
-            const categoryCount = Object.keys(counts).filter(key => counts[key] > 0).length;
+            const categoryCount = Object.keys(categoryGroups).length;
             animateCounter('totalImagesCount', totalImagesCount, 1500);
             animateCounter('categoryCount', categoryCount, 1500);
             animateCounter('activeCategoryCount', totalImagesCount, 1500);

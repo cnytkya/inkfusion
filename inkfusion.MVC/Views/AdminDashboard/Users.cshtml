@@ -1,0 +1,268 @@
+@model IEnumerable<inkfusion.MVC.Models.User>
+
+@{
+    ViewData["Title"] = "Kullanıcılar";
+    Layout = "_AdminLayout";
+}
+
+<style>
+    .page-header {
+        margin-bottom: 30px;
+    }
+
+    .table-container {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: rgba(212, 175, 55, 0.1);
+    }
+
+    th {
+        padding: 15px;
+        text-align: left;
+        color: #d4af37;
+        font-weight: 600;
+        border-bottom: 2px solid #d4af37;
+    }
+
+    td {
+        padding: 12px 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    tr:hover {
+        background: rgba(212, 175, 55, 0.05);
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .badge-admin {
+        background: rgba(212, 175, 55, 0.3);
+        color: #d4af37;
+    }
+
+    .badge-customer {
+        background: rgba(23, 162, 184, 0.3);
+        color: #17a2b8;
+    }
+
+    .badge-active {
+        background: rgba(40, 167, 69, 0.3);
+        color: #28a745;
+    }
+
+    .badge-inactive {
+        background: rgba(220, 53, 69, 0.3);
+        color: #dc3545;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn-primary {
+        background: #d4af37;
+        color: #1a1a1a;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .btn-primary:hover {
+        background: #f4d03f;
+    }
+
+    .action-btn {
+        padding: 6px 12px;
+        margin: 2px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+        background: #007bff;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background: #0056b3;
+    }
+
+    .btn-deactivate {
+        background: #dc3545;
+        color: white;
+    }
+
+    .btn-deactivate:hover {
+        background: #c82333;
+    }
+
+    .btn-activate {
+        background: #28a745;
+        color: white;
+    }
+
+    .btn-activate:hover {
+        background: #218838;
+    }
+
+    .btn-admin {
+        background: rgba(212, 175, 55, 0.2);
+        color: #d4af37;
+        border: 1px solid #d4af37;
+    }
+
+    .btn-admin:hover {
+        background: rgba(212, 175, 55, 0.4);
+    }
+
+    .btn-delete {
+        background: #721c24;
+        color: white;
+        border: 1px solid #f5c6cb;
+    }
+
+    .btn-delete:hover {
+        background: #992029;
+    }
+
+    .empty-state {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 60px 20px;
+        border-radius: 10px;
+        text-align: center;
+        color: #b0b0b0;
+    }
+</style>
+
+@if (TempData["Success"] != null)
+{
+    <div style="background: rgba(40, 167, 69, 0.15); border: 1px solid rgba(40, 167, 69, 0.4); color: #28a745; padding: 15px; border-radius: 6px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-check-circle"></i>
+        <span>@TempData["Success"]</span>
+    </div>
+}
+
+<div class="page-header">
+    <h2><i class="fas fa-users me-2"></i>Kullanıcılar</h2>
+    <a href="@Url.Action("CreateUser", "AdminDashboard")" class="btn-primary">
+        <i class="fas fa-plus me-2"></i>Yeni Kullanıcı
+    </a>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Ad Soyadı</th>
+                    <th>E-posta</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Rol</th>
+                    <th>Durum</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.OrderByDescending(u => u.CreatedAt))
+                {
+                    <tr>
+                        <td>@user.FirstName @user.LastName</td>
+                        <td>@user.Email</td>
+                        <td>@user.Username</td>
+                        <td>
+                            <span class="badge badge-@(user.Role == inkfusion.MVC.Models.UserRole.Admin ? "admin" : "customer")">
+                                @user.Role
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge badge-@(user.IsActive ? "active" : "inactive")">
+                                @(user.IsActive ? "Aktif" : "İnaktif")
+                            </span>
+                        </td>
+                        <td>@user.CreatedAt.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            @if (user.Id != 1)
+                            {
+                                <a href="@Url.Action("EditUser", "AdminDashboard", new { id = user.Id })" class="action-btn btn-edit">
+                                    <i class="fas fa-edit"></i> Düzenle
+                                </a>
+
+                                @if (user.Role == inkfusion.MVC.Models.UserRole.Customer)
+                                {
+                                    <form method="post" action="@Url.Action("ChangeUserRole", "AdminDashboard", new { id = user.Id })" style="display: inline;">
+                                        <input type="hidden" name="role" value="@inkfusion.MVC.Models.UserRole.Admin" />
+                                        <button type="submit" class="action-btn btn-admin" onclick="return confirm('Admin yap?')">
+                                            <i class="fas fa-crown"></i> Admin Yap
+                                        </button>
+                                    </form>
+                                }
+
+                                @if (user.IsActive)
+                                {
+                                    <form method="post" action="@Url.Action("DeactivateUser", "AdminDashboard", new { id = user.Id })" style="display: inline;">
+                                        <button type="submit" class="action-btn btn-deactivate" onclick="return confirm('Deaktif et?')">
+                                            <i class="fas fa-ban"></i> Deaktif Et
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form method="post" action="@Url.Action("ReactivateUser", "AdminDashboard", new { id = user.Id })" style="display: inline;">
+                                        <button type="submit" class="action-btn btn-activate" onclick="return confirm('Aktifleştir?')">
+                                            <i class="fas fa-check"></i> Aktifleştir
+                                        </button>
+                                    </form>
+                                }
+
+                                <form method="post" action="@Url.Action("DeleteUser", "AdminDashboard", new { id = user.Id })" style="display: inline;">
+                                    <button type="submit" class="action-btn btn-delete" onclick="return confirm('Bu kullanıcıyı silmek istediğinize emin misiniz? Bu işlem geri alınamaz!')">
+                                        <i class="fas fa-trash"></i> Sil
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span style="color: #d4af37; font-size: 12px; font-weight: 600;">
+                                    <i class="fas fa-crown"></i> Super Admin
+                                </span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <i class="fas fa-user-slash" style="font-size: 64px; color: #d4af37;"></i>
+        <p>Henüz kullanıcı yok.</p>
+    </div>
+}

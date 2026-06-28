@@ -1,0 +1,146 @@
+@model IEnumerable<inkfusion.MVC.Models.Artist>
+
+@{
+    ViewData["Title"] = "Sanatçılar";
+    Layout = "_AdminLayout";
+}
+
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .btn-primary {
+        background: #d4af37;
+        color: #1a1a1a;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .table-container {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: rgba(212, 175, 55, 0.1);
+    }
+
+    th {
+        padding: 15px;
+        text-align: left;
+        color: #d4af37;
+        font-weight: 600;
+        border-bottom: 2px solid #d4af37;
+    }
+
+    td {
+        padding: 12px 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    tr:hover {
+        background: rgba(212, 175, 55, 0.05);
+    }
+
+    .action-btn {
+        padding: 6px 12px;
+        margin: 0 2px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .btn-edit {
+        background: #007bff;
+        color: white;
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: white;
+    }
+
+    .empty-state {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 60px 20px;
+        border-radius: 10px;
+        text-align: center;
+        color: #b0b0b0;
+    }
+</style>
+
+@if (TempData["Success"] != null)
+{
+    <div style="background: rgba(40, 167, 69, 0.15); border: 1px solid rgba(40, 167, 69, 0.4); color: #28a745; padding: 15px; border-radius: 6px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-check-circle"></i>
+        <span>@TempData["Success"]</span>
+    </div>
+}
+
+<div class="page-header">
+    <h2><i class="fas fa-user-tie me-2"></i>Sanatçılar</h2>
+    <a href="@Url.Action("CreateArtist", "AdminDashboard")" class="btn-primary">
+        <i class="fas fa-plus me-2"></i>Yeni Sanatçı
+    </a>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Ad</th>
+                    <th>Uzmanlık</th>
+                    <th>Tecrübe</th>
+                    <th>Durum</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var artist in Model)
+                {
+                    <tr>
+                        <td>@artist.FirstName @artist.LastName</td>
+                        <td>@artist.Specialization</td>
+                        <td>@artist.ExperienceYears yıl</td>
+                        <td>
+                            <span style="color: @(artist.IsActive ? "#28a745" : "#dc3545");">
+                                @(artist.IsActive ? "Aktif" : "İnaktif")
+                            </span>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("EditArtist", "AdminDashboard", new { id = artist.Id })" class="action-btn btn-edit">Düzenle</a>
+                            <form method="post" action="@Url.Action("DeleteArtist", "AdminDashboard", new { id = artist.Id })" style="display: inline;">
+                                <button type="submit" class="action-btn btn-delete" onclick="return confirm('Emin misiniz? Bu işlem geri alınamaz!')">Sil</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <i class="fas fa-users" style="font-size: 64px; color: #d4af37;"></i>
+        <p>Henüz sanatçı yok.</p>
+    </div>
+}

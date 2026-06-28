@@ -48,11 +48,57 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/#contact" data-lang-key="contact">İletişim</a>
                     </li>
-                    <li class="nav-item">
+
+                    @if (User.Identity?.IsAuthenticated == false)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link auth-btn login-btn" asp-controller="Login" asp-action="Index">
+                                <i class="fas fa-sign-in-alt me-1"></i>Giriş Yap
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link auth-btn signup-btn" asp-controller="Signup" asp-action="Index">
+                                <i class="fas fa-user-plus me-1"></i>Kayıt Ol
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item dropdown user-dropdown">
+                            <button class="nav-link dropdown-toggle user-btn" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle me-2"></i>@User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value
+                                <i class="fas fa-chevron-down ms-2" style="font-size: 0.8rem;"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end user-menu" aria-labelledby="userDropdown">
+                                @if (User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value == "Admin")
+                                {
+                                    <li>
+                                        <a class="dropdown-item" href="@Url.Action("Index", "AdminDashboard")">
+                                            <i class="fas fa-cog me-2"></i>Admin Panel
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="@Url.Action("Profile", "AdminDashboard")">
+                                            <i class="fas fa-user me-2"></i>Profil
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                }
+                                <li>
+                                    <form method="post" action="@Url.Action("Logout", "Login")" style="display: inline;">
+                                        <button type="submit" class="dropdown-item logout-item">
+                                            <i class="fas fa-sign-out-alt me-2"></i>Çıkış Yap
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    @*<li class="nav-item">
                         <button class="theme-toggle" id="themeToggle">
                             <i class="fas fa-moon"></i>
                         </button>
-                    </li>
+                    </li>*@
                     <li class="nav-item">
                         <button class="lang-toggle" id="langToggle">
                             TR
@@ -73,7 +119,7 @@
         <a href="https://wa.me/905312880161" target="_blank" class="social-icon whatsapp" aria-label="Whatsapp" data-hover-text-tr="Mesaj atmak için tıklayın" data-hover-text-en="Click to message">
             <i class="fab fa-whatsapp"></i>
         </a>
-        <a href="https://www.instagram.com/inkftattoopiercing" target="_blank" class="social-icon instagram" aria-label="Instagram" data-hover-text-tr="Bizi takip edin" data-hover-text-en="Follow us">
+        <a href="https://www.instagram.com/inkfusion.kadikoy" target="_blank" class="social-icon instagram" aria-label="Instagram" data-hover-text-tr="Bizi takip edin" data-hover-text-en="Follow us">
             <i class="fab fa-instagram"></i>
         </a>
     </div>
@@ -109,7 +155,7 @@
                 <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
                     <h5 class="text-uppercase footer-heading" data-lang-key="social-media-title">Sosyal Medya</h5>
                     <div class="social-links">
-                        <a href="https://www.instagram.com/inkftattoopiercing/" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/inkfusion.kadikoy" class="social-link"><i class="fab fa-instagram"></i></a>
                         <a href="https://www.linkedin.com/in/cuneytkayadev" class="social-link"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
@@ -127,6 +173,7 @@
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
     <script>
+        /*
         document.addEventListener("DOMContentLoaded", function () {
             var typed = new Typed("#typed-slogan", {
                 strings: [
@@ -139,6 +186,7 @@
                 loop: true
             });
         });
+        */
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)

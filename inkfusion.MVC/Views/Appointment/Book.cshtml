@@ -1,0 +1,179 @@
+@{
+    ViewData["Title"] = "Randevu Al";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/appointment.css">
+
+<div class="booking-container">
+    <div class="booking-header">
+        <h2><i class="fas fa-calendar-check me-2"></i>Randevu Al</h2>
+        <p>Sanatçılarımızdan birini seçerek randevu alabilirsiniz</p>
+    </div>
+
+    @if (ViewBag.CurrentUser != null)
+    {
+        <div class="auth-info">
+            <i class="fas fa-check-circle me-2"></i>
+            Giriş yapmış kullanıcı olarak randevu alıyorsunuz
+        </div>
+    }
+
+    <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle me-2"></i>
+        <span id="successText"></span>
+    </div>
+
+    <div class="error-message" id="errorMessage">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        <span id="errorText"></span>
+    </div>
+
+    <form id="bookingForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="artistId">Sanatçı Seçin *</label>
+                <select id="artistId" name="ArtistId" required>
+                    <option value="">-- Sanatçı Seçin --</option>
+                    @foreach (var artist in ViewBag.Artists ?? new List<Artist>())
+                    {
+                        <option value="@artist.Id">@artist.FirstName @artist.LastName - @artist.Specialization</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="serviceId">Hizmet Seçin *</label>
+                <select id="serviceId" name="ServiceId" required>
+                    <option value="">-- Hizmet Seçin --</option>
+                    @foreach (var service in ViewBag.Services ?? new List<Service>())
+                    {
+                        <option value="@service.Id">@service.Name - ₺@service.Price.ToString("F2")</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="appointmentDate">Tercih Edilen Tarih *</label>
+                <input type="date" id="appointmentDate" name="AppointmentDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="timeSlot">Tercih Edilen Saat *</label>
+                <input type="time" id="timeSlot" name="TimeSlot" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Açıklama / Tasarım Notları</label>
+            <textarea id="description" name="Description" placeholder="Dövme tasarımı hakkında detaylar..."></textarea>
+        </div>
+
+        @if (ViewBag.CurrentUser == null)
+        {
+            <div class="guest-section show">
+                <h4><i class="fas fa-user me-2"></i>İletişim Bilgileri</h4>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="guestName">Adınız Soyadınız *</label>
+                        <input type="text" id="guestName" name="GuestName" placeholder="Ahmet Yılmaz" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="guestEmail">E-posta *</label>
+                        <input type="email" id="guestEmail" name="GuestEmail" placeholder="ahmet@example.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="guestPhone">Telefon *</label>
+                    <input type="tel" id="guestPhone" name="GuestPhone" placeholder="+90 5XX XXX XXXX" required>
+                </div>
+            </div>
+        }
+
+        <div class="button-group">
+            <button type="submit" id="submitBtn">
+                <i class="fas fa-check me-2"></i>Randevu Al
+            </button>
+            <a href="/" class="btn-cancel">
+                <i class="fas fa-times me-2"></i>İptal
+            </a>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Randevu kaydediliyor...</p>
+        </div>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('bookingForm');
+    const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
+    const loading = document.getElementById('loading');
+    const submitBtn = document.getElementById('submitBtn');
+    const appointmentDateInput = document.getElementById('appointmentDate');
+
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    appointmentDateInput.min = today;
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        successMessage.classList.remove('show');
+        errorMessage.classList.remove('show');
+        loading.style.display = 'block';
+        submitBtn.disabled = true;
+
+        const data = {
+            ArtistId: parseInt(document.getElementById('artistId').value) || 0,
+            ServiceId: parseInt(document.getElementById('serviceId').value) || 0,
+            AppointmentDate: document.getElementById('appointmentDate').value,
+            TimeSlot: document.getElementById('timeSlot').value,
+            Description: document.getElementById('description').value,
+            GuestName: document.getElementById('guestName')?.value || null,
+            GuestEmail: document.getElementById('guestEmail')?.value || null,
+            GuestPhone: document.getElementById('guestPhone')?.value || null
+        };
+
+        console.log('Sending data:', data);
+
+        try {
+            const response = await fetch('/appointment/book', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                document.getElementById('successText').textContent = result.message;
+                successMessage.classList.add('show');
+                form.reset();
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+            } else {
+                document.getElementById('errorText').textContent = result.message || 'Randevu kaydedilirken hata oluştu.';
+                errorMessage.classList.add('show');
+            }
+        } catch (error) {
+            document.getElementById('errorText').textContent = 'Hata: ' + error.message;
+            errorMessage.classList.add('show');
+        } finally {
+            loading.style.display = 'none';
+            submitBtn.disabled = false;
+        }
+    });
+});
+</script>

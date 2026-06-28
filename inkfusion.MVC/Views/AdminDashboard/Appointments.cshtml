@@ -1,0 +1,173 @@
+@model IEnumerable<inkfusion.MVC.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Randevular";
+    Layout = "_AdminLayout";
+}
+
+<style>
+    .page-header {
+        margin-bottom: 30px;
+    }
+
+    .table-container {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: rgba(212, 175, 55, 0.1);
+    }
+
+    th {
+        padding: 15px;
+        text-align: left;
+        color: #d4af37;
+        font-weight: 600;
+        border-bottom: 2px solid #d4af37;
+    }
+
+    td {
+        padding: 12px 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    tr:hover {
+        background: rgba(212, 175, 55, 0.05);
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .badge-pending {
+        background: rgba(255, 193, 7, 0.3);
+        color: #ffc107;
+    }
+
+    .badge-confirmed {
+        background: rgba(23, 162, 184, 0.3);
+        color: #17a2b8;
+    }
+
+    .badge-completed {
+        background: rgba(40, 167, 69, 0.3);
+        color: #28a745;
+    }
+
+    .action-btn {
+        padding: 6px 12px;
+        margin: 0 2px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .btn-confirm {
+        background: #17a2b8;
+        color: white;
+    }
+
+    .btn-complete {
+        background: #28a745;
+        color: white;
+    }
+
+    .btn-cancel {
+        background: #dc3545;
+        color: white;
+    }
+
+    .empty-state {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 60px 20px;
+        border-radius: 10px;
+        text-align: center;
+        color: #b0b0b0;
+    }
+</style>
+
+<div class="page-header">
+    <h2><i class="fas fa-calendar-alt me-2"></i>Randevular</h2>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Müşteri</th>
+                    <th>Sanatçı</th>
+                    <th>Tarih & Saat</th>
+                    <th>Durum</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var appointment in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (appointment.User != null)
+                            {
+                                @appointment.User.FirstName @appointment.User.LastName
+                            }
+                            else if (!string.IsNullOrEmpty(appointment.GuestName))
+                            {
+                                @appointment.GuestName <span style="font-size: 12px; color: #999;">(Misafir)</span>
+                            }
+                            else
+                            {
+                                <span style="color: #999;">-</span>
+                            }
+                        </td>
+                        <td>@appointment.Artist?.FirstName @appointment.Artist?.LastName</td>
+                        <td>@appointment.AppointmentDate.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>
+                            <span class="badge badge-@appointment.Status.ToString().ToLower()">
+                                @appointment.Status
+                            </span>
+                        </td>
+                        <td>
+                            @if (appointment.Status == inkfusion.MVC.Models.AppointmentStatus.Pending)
+                            {
+                                <form method="post" action="@Url.Action("UpdateAppointmentStatus", "AdminDashboard", new { id = appointment.Id })" style="display: inline;">
+                                    <input type="hidden" name="status" value="@inkfusion.MVC.Models.AppointmentStatus.Confirmed" />
+                                    <button type="submit" class="action-btn btn-confirm">Onayla</button>
+                                </form>
+                            }
+                            @if (appointment.Status == inkfusion.MVC.Models.AppointmentStatus.Confirmed)
+                            {
+                                <form method="post" action="@Url.Action("UpdateAppointmentStatus", "AdminDashboard", new { id = appointment.Id })" style="display: inline;">
+                                    <input type="hidden" name="status" value="@inkfusion.MVC.Models.AppointmentStatus.Completed" />
+                                    <button type="submit" class="action-btn btn-complete">Tamamla</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <i class="fas fa-calendar" style="font-size: 64px; color: #d4af37;"></i>
+        <p>Henüz randevu yok.</p>
+    </div>
+}

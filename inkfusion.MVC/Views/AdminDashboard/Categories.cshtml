@@ -1,0 +1,205 @@
+@model IEnumerable<inkfusion.MVC.Models.Category>
+
+@{
+    ViewData["Title"] = "Kategoriler";
+    Layout = "_AdminLayout";
+}
+
+<style>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .btn-primary {
+        background: #d4af37;
+        color: #1a1a1a;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .btn-primary:hover {
+        background: #f4d03f;
+    }
+
+    .table-container {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: rgba(212, 175, 55, 0.1);
+    }
+
+    th {
+        padding: 15px;
+        text-align: left;
+        color: #d4af37;
+        font-weight: 600;
+        border-bottom: 2px solid #d4af37;
+    }
+
+    td {
+        padding: 12px 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    tr:hover {
+        background: rgba(212, 175, 55, 0.05);
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .badge-active {
+        background: rgba(40, 167, 69, 0.3);
+        color: #28a745;
+    }
+
+    .badge-inactive {
+        background: rgba(220, 53, 69, 0.3);
+        color: #dc3545;
+    }
+
+    .action-btn {
+        padding: 6px 12px;
+        margin: 2px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+        background: #007bff;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background: #0056b3;
+    }
+
+    .btn-delete {
+        background: #721c24;
+        color: white;
+        border: 1px solid #f5c6cb;
+    }
+
+    .btn-delete:hover {
+        background: #992029;
+    }
+
+    .empty-state {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 60px 20px;
+        border-radius: 10px;
+        text-align: center;
+        color: #b0b0b0;
+    }
+
+    .success-alert {
+        background: rgba(40, 167, 69, 0.15);
+        border: 1px solid rgba(40, 167, 69, 0.4);
+        color: #28a745;
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+</style>
+
+@if (TempData["Success"] != null)
+{
+    <div class="success-alert">
+        <i class="fas fa-check-circle"></i>
+        <span>@TempData["Success"]</span>
+    </div>
+}
+
+<div class="page-header">
+    <h2><i class="fas fa-tags me-2"></i>Kategoriler</h2>
+    <a href="@Url.Action("CreateCategory", "AdminDashboard")" class="btn-primary">
+        <i class="fas fa-plus me-2"></i>Yeni Kategori
+    </a>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>İkon</th>
+                    <th>Kategori Adı</th>
+                    <th>Açıklama</th>
+                    <th>Sıra</th>
+                    <th>Durum</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model.OrderBy(c => c.DisplayOrder))
+                {
+                    <tr>
+                        <td style="font-size: 20px;">
+                            <i class="@category.Icon" style="color: #d4af37;"></i>
+                        </td>
+                        <td>@category.Name</td>
+                        <td>@(category.Description?.Length > 40 ? category.Description.Substring(0, 40) + "..." : category.Description)</td>
+                        <td>#@category.DisplayOrder</td>
+                        <td>
+                            <span class="badge badge-@(category.IsActive ? "active" : "inactive")">
+                                @(category.IsActive ? "Aktif" : "İnaktif")
+                            </span>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("EditCategory", "AdminDashboard", new { id = category.Id })" class="action-btn btn-edit">
+                                <i class="fas fa-edit"></i> Düzenle
+                            </a>
+                            @if (category.Id > 6)
+                            {
+                                <form method="post" action="@Url.Action("DeleteCategory", "AdminDashboard", new { id = category.Id })" style="display: inline;">
+                                    <button type="submit" class="action-btn btn-delete" onclick="return confirm('Bu kategoriyi silmek istediğinize emin misiniz?')">
+                                        <i class="fas fa-trash"></i> Sil
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span style="font-size: 10px; color: #b0b0b0;">Varsayılan</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <i class="fas fa-tag" style="font-size: 64px; color: #d4af37;"></i>
+        <p>Henüz kategori yok.</p>
+    </div>
+}

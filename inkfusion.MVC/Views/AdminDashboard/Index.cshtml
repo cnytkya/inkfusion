@@ -1,0 +1,195 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "_AdminLayout";
+}
+
+<style>
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: #d4af37;
+        transform: translateY(-5px);
+    }
+
+    .stat-card .number {
+        font-size: 32px;
+        font-weight: 700;
+        color: #d4af37;
+        margin: 10px 0;
+    }
+
+    .stat-card .label {
+        color: #b0b0b0;
+        font-size: 14px;
+    }
+
+    .stat-card i {
+        font-size: 28px;
+        color: #d4af37;
+    }
+
+    .table-container {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 30px;
+    }
+
+    .table-container table {
+        width: 100%;
+        color: #fff;
+        border-collapse: collapse;
+    }
+
+    .table-container thead {
+        background: rgba(212, 175, 55, 0.1);
+        border-bottom: 2px solid #d4af37;
+    }
+
+    .table-container th {
+        padding: 15px;
+        text-align: left;
+        color: #d4af37;
+        font-weight: 600;
+    }
+
+    .table-container td {
+        padding: 12px 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .table-container tr:hover {
+        background: rgba(212, 175, 55, 0.05);
+    }
+
+    .section-title {
+        color: #d4af37;
+        font-size: 22px;
+        margin: 40px 0 20px 0;
+        border-bottom: 2px solid #d4af37;
+        padding-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .badge-success {
+        background: rgba(40, 167, 69, 0.3);
+        color: #28a745;
+    }
+
+    .badge-warning {
+        background: rgba(255, 193, 7, 0.3);
+        color: #ffc107;
+    }
+
+    .empty-state {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 10px;
+        text-align: center;
+        color: #b0b0b0;
+    }
+</style>
+
+<h2 class="section-title"><i class="fas fa-chart-bar me-2"></i>İstatistikler</h2>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <i class="fas fa-users"></i>
+        <div class="number">@ViewBag.Stats.TotalUsers</div>
+        <div class="label">Toplam Kullanıcı</div>
+    </div>
+
+    <div class="stat-card">
+        <i class="fas fa-user-check"></i>
+        <div class="number">@ViewBag.Stats.TotalCustomers</div>
+        <div class="label">Müşteri</div>
+    </div>
+
+    <div class="stat-card">
+        <i class="fas fa-calendar-check"></i>
+        <div class="number">@ViewBag.Stats.CompletedAppointments</div>
+        <div class="label">Tamamlanan Randevu</div>
+    </div>
+
+    <div class="stat-card">
+        <i class="fas fa-calendar-alt"></i>
+        <div class="number">@ViewBag.Stats.PendingAppointments</div>
+        <div class="label">Beklemede Randevu</div>
+    </div>
+
+    <div class="stat-card">
+        <i class="fas fa-images"></i>
+        <div class="number">@ViewBag.Stats.TotalGalleryItems</div>
+        <div class="label">Galeri Fotoğrafı</div>
+    </div>
+
+    <div class="stat-card">
+        <i class="fas fa-star"></i>
+        <div class="number">@ViewBag.Stats.ApprovedComments</div>
+        <div class="label">Onaylı Yorumlar</div>
+    </div>
+</div>
+
+<h2 class="section-title"><i class="fas fa-history me-2"></i>Son Randevular</h2>
+
+@if (ViewBag.RecentAppointments != null && ViewBag.RecentAppointments.Count > 0)
+{
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Müşteri</th>
+                    <th>Sanatçı</th>
+                    <th>Tarih & Saat</th>
+                    <th>Durum</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var appointment in ViewBag.RecentAppointments)
+                {
+                    <tr>
+                        <td>@appointment.UserName</td>
+                        <td>@appointment.ArtistName</td>
+                        <td>@appointment.AppointmentDate.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>
+                            <span class="badge badge-@(appointment.Status.ToString() == "Completed" ? "success" : "warning")">
+                                @appointment.Status
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="empty-state">
+        <i class="fas fa-inbox" style="font-size: 48px; color: #d4af37; margin-bottom: 15px; display: block;"></i>
+        <p>Henüz randevu yok.</p>
+    </div>
+}

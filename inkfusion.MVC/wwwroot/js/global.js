@@ -69,7 +69,8 @@ const texts = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Tema (Theme) Toggle Logic
+    // Tema (Theme) Toggle Logic - COMMENTED OUT
+    /*
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
     const savedTheme = localStorage.getItem('theme');
@@ -91,6 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const themeIcon = themeToggle.querySelector('i');
         themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     }
+    */
 
     // Dil (Language) Toggle Logic
     const langToggle = document.getElementById('langToggle');

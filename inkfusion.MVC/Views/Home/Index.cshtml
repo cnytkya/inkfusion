@@ -16,7 +16,7 @@
                     <h1 class="hero-title" data-lang-key="hero-title">Sanatını <span class="text-accent">Vücudunda</span> Taşı</h1>
                     <p class="hero-subtitle" data-lang-key="hero-subtitle">Profesyonel dövme sanatçıları ile hayalindeki dövmeyi gerçeğe dönüştürüyoruz.</p>
                     <div class="hero-buttons mt-4">
-                        <a href="#contact" class="btn btn-primary me-3" data-lang-key="book-now">Randevu Al</a>
+                        <a href="/appointment/book" class="btn btn-primary me-3" data-lang-key="book-now">Randevu Al</a>
                         <a href="#gallery" class="btn btn-outline" data-lang-key="view-work">İşlerimize Bak</a>
                     </div>
                 </div>
@@ -89,34 +89,21 @@
             </div>
         </div>
         <div class="row mt-5">
-            <div class="col-md-4 mb-4">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-drafting-compass"></i>
+            @if (ViewBag.Services != null)
+            {
+                @foreach (var service in ViewBag.Services)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="service-card">
+                            <div class="service-icon">
+                                <i class="@service.IconClass"></i>
+                            </div>
+                            <h3>@service.Name</h3>
+                            <p>@service.Description</p>
+                        </div>
                     </div>
-                    <h3 data-lang-key="service1-title">Özel Tasarım</h3>
-                    <p data-lang-key="service1-text">Hayalinizdeki dövmeyi birlikte tasarlayalım. Tamamen size özel ve özgün çizimler.</p>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-paint-brush"></i>
-                    </div>
-                    <h3 data-lang-key="service2-title">Renkli Dövmeler</h3>
-                    <p data-lang-key="service2-text">Canlı ve kalıcı renklerle hayalinizdeki dövmeyi sanat eserine dönüştürüyoruz.</p>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-magic"></i>
-                    </div>
-                    <h3 data-lang-key="service3-title">Cover Up (Dövme Kapatma)</h3>
-                    <p data-lang-key="service3-text">İstemediğiniz dövmeleri, profesyonel dokunuşlarla yepyeni bir sanat eserine dönüştürüyoruz.</p>
-                </div>
-            </div>
-        </div>
+                }
+            }
     </div>
 </section>
 
@@ -132,18 +119,25 @@
             </div>
         </div>
         <div class="row mt-5">
-            @* Sadece ilk 12 resmi gösteren döngü *@
-            @for (int i = 1; i <= 12; i++)
+            @if (ViewBag.GalleryItems != null && ((IEnumerable<dynamic>)ViewBag.GalleryItems).Count() > 0)
             {
-                <div class="col-md-4 mb-4">
-                    <div class="gallery-item">
-                        <div class="gallery-image" style="background-image: url('img/gallery/realistic/@(i).jpg');">
-                            <div class="gallery-overlay">
-                                @*<h4 data-lang-key="tattoo1-title">Dövme @i</h4>*@
-                                <p data-lang-key="tattoo1-style">Realistik</p>
+                @foreach (var item in ViewBag.GalleryItems)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="gallery-item">
+                            <div class="gallery-image" style="background-image: url('@item.ImageUrl');">
+                                <div class="gallery-overlay">
+                                    <p data-lang-key="tattoo1-style">@item.Category?.Name</p>
+                                </div>
                             </div>
                         </div>
                     </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center">
+                    <p>Henüz galeri görüntüsü yok.</p>
                 </div>
             }
 
@@ -166,48 +160,32 @@
             </div>
         </div>
         <div class="row mt-5">
-            <div class="col-md-4 mb-4">
-                <div class="artist-card">
-                    <div class="artist-image" style="background-image: url('https://placehold.co/400x500/1a1a1a/FFFFFF/png?text=Yiğit+Kırkyıldız');"></div>
-                    <div class="artist-info">
-                        <h3 data-lang-key="artist1-name">Yiğit Kırkyıldız</h3>
-                        <p data-lang-key="artist1-specialty">Realistik Dövmeler Uzmanı</p>
-                        <div class="artist-social">
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
+            @if (ViewBag.Artists != null)
+            {
+                @foreach (var artist in ViewBag.Artists)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="artist-card">
+                            <div class="artist-image" style="background-image: url('@(artist.ImageUrl ?? $"https://placehold.co/400x500/1a1a1a/FFFFFF/png?text={artist.FirstName}+{artist.LastName}")');"></div>
+                            <div class="artist-info">
+                                <h3>@artist.FirstName @artist.LastName</h3>
+                                <p>@artist.Specialization</p>
+                                <div class="artist-social">
+                                    @if (!string.IsNullOrEmpty(artist.InstagramUrl))
+                                    {
+                                        <a href="@artist.InstagramUrl" target="_blank"><i class="fab fa-instagram"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#"><i class="fab fa-instagram"></i></a>
+                                    }
+                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="artist-card">
-                    <div class="artist-image" style="background-image: url('https://placehold.co/400x500/1a1a1a/FFFFFF/png?text=Onur+Sarı');"></div>
-                    <div class="artist-info">
-                        <h3 data-lang-key="artist2-name">
-                            Onur Sarı
-                        </h3>
-                        <p data-lang-key="artist2-specialty">Geleneksel Dövmeler Uzmanı</p>
-                        <div class="artist-social">
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="artist-card">
-                    <div class="artist-image" style="background-image: url('https://placehold.co/400x500/1a1a1a/FFFFFF/png?text=Ramazan Savaş+Çinioğlu');"></div>
-                    <div class="artist-info">
-                        <h3 data-lang-key="artist3-name">Ramazan Savaş Çinioğlu </h3>
-                        <p data-lang-key="artist3-specialty">Minimal Dövmeler Uzmanı</p>
-                        <div class="artist-social">
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                }
+            }
     </div>
 </section>
 
